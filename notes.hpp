@@ -2,7 +2,7 @@
 #define NWT_MUS_NOTES_HPP
 
 /*
-Liste an vordefinierten Notenwerten.
+Liste an vordefinierten Notenwerten. (Frequenzen)
 */
 
 #define NOTE_B0  31

@@ -34,6 +34,11 @@ class Disco {
     }
 
     void setupPins() {
+      /*
+      Dies ist ein 2D-Array.
+      Im Prinzip hält es 13 Arrays mit einer länge von 2.
+      Diese halten in index-0 den Pin und in index-1 den PinMode.
+      */
       int8_t pinMapping[13][2] = {
         {START_BUTTON_PIN, INPUT_PULLUP},
         {PREV_BUTTON_PIN, INPUT_PULLUP},
@@ -72,7 +77,7 @@ class Disco {
           //Falls mindestens HEAVY_DEBUG definiert ist wird der gesamte Inhalt von tracks ausgelesen.
           for (uint16_t i = 0; i < util::lengthOfArray(&tracks); i++) {
             int16_t value = (int16_t)pgm_read_word(&tracks[i]);
-            Serial.println(value);  //pgm_read_word wird verwendet denn diese Funktion kann 16 bit Werte im PROGMEM lesen, aber als uint16_t (keine negativen Werte) also müssen diese explizit int16_t umgewandelt werden.
+            Serial.println(value);  //pgm_read_word wird verwendet denn diese Funktion kann 16 bit Werte im PROGMEM lesen, aber als 16 bit Integer also müssen diese explizit int16_t umgewandelt werden.
             tone(BUZZER_PIN, value);
           }
         #endif
@@ -95,7 +100,7 @@ class Disco {
     */
     void playLED() {
       #ifndef DISABLE_LED
-        this->simpleLEDManager.applyRules(this->trackManager.getIteration());
+        this->simpleLEDManager.applyRules(this->trackManager.getIteration()); //Basierend auf der jetzigen Zahl sollen die festgelegten SimpleLEDManagerRule Regeln angewendet werden.
         analogWrite(GETTRACKPROGRESS_OUTPUT_PIN, this->trackManager.getTrackProgress() * 255);
         //RGB Led:
         analogWrite(RGB_LED_GREEN, (this->trackManager.getTrack() * util::lengthOfArray(&tracks)) % 255);  //Der Grün-Wert ist höher umso weiter hinten der Track ist (in der Liste)
@@ -114,21 +119,21 @@ class Disco {
     void play() {
       int16_t noteDuration = 0;
       #ifdef DEBUG
-        //Falls mindestens DEBUG definiert ist wird jede iteration der iterator (Jetzige Stelle in tracks) angegeben.
+        //Falls mindestens DEBUG definiert ist wird jede Iteration der Iterator (Jetzige Stelle in tracks) angegeben.
         Serial.print(this->trackManager.getIteration());
         Serial.println();
       #endif
       if (this->trackManager.atEndOfTrack() OR this->trackManager.atEndOfTracks()) {   //Überprüft ob iteration hinter der der letzten Note des Tracks ist, oder außerhalb der ingesamten Menge der Noten.
-        this->trackManager.jumpToBeginingOfTrack();                                                                                                                         //Wenn dieser Fall eintritt wird iterator wieder an den Anfang des jetzigen Tracks zurückgesetzt.
+        this->trackManager.jumpToBeginingOfTrack();                                    //Wenn dieser Fall eintritt wird iterator wieder an den Anfang des jetzigen Tracks zurückgesetzt.
       }
       this->playLED();
-      Note tmpNote = {(int16_t) pgm_read_word(&tracks[this->trackManager.getIteration()]), (int16_t) pgm_read_word(&tracks[this->trackManager.getIteration() + 1])};
-      this->notePlayer.play(tmpNote);
+      Note tmpNote = {(int16_t) pgm_read_word(&tracks[this->trackManager.getIteration()]), (int16_t) pgm_read_word(&tracks[this->trackManager.getIteration() + 1])};  //Kreirt eine Note aus ZWEI nebeneinander liegenden Werten aus dem PROGMEM. 
+      this->notePlayer.play(tmpNote); //Die temporäre Note wird abgespielt
       this->trackManager.stepIteration();
     }
 
     void stop() {
-      this->simpleLEDManager.setLEDs(LOW);
+      this->simpleLEDManager.setLEDs(LOW); //Alle LEDs die vom SimpleLEDManager gemanaged werden, werden auf LOW gestellt
       noTone(BUZZER_PIN);  //Stoppe den Buzzer
     }
 
@@ -140,6 +145,8 @@ class Disco {
       }
 
       //Reset + PREV/NEXT
+
+      //Es leuchten auch LEDs beim umschalten.
 
       if ((digitalRead(PREV_BUTTON_PIN) == LOW) & (digitalRead(NEXT_BUTTON_PIN) == LOW)) {
         this->trackManager.resetTrack();

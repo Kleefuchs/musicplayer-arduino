@@ -34,6 +34,8 @@ class NotePlayer {
       delay(noteDuration);                                                              //Pausiere das das Programm um noteDuration.
       noTone(BUZZER_PIN);                                                               //Schalte den Ton aus.
     }
+
+    
 };
 
 #endif

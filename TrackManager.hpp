@@ -21,6 +21,10 @@ class TrackManager {
 
     uint8_t changeValue = TEMPO_CHANGE_VALUE; //Die Größe der Veränderung am Tempo
 
+    void updateWholeNote() {
+      this->wholeNote = CONST_TRACKMANAGER_MUS_WHOLE_NOTE_NO_TEMPO_APPLIED / this->tempo;
+    }
+
   public:
     uint16_t getIteration() {
       return this->iteration;
@@ -30,18 +34,31 @@ class TrackManager {
       return this->iteration - trackStarts[currentTrack];
     }
 
+    /*
+    Gibt keine Minuten sondern Elemente in tracks an. (Anzahl in diesem Track.)
+    */
     uint16_t getTrackLength() {
       return (trackStarts[this->currentTrack + 1] - trackStarts[this->currentTrack]);
     }
 
+    /*
+    Returns the Track Progress as a float.
+    So 0.9 would be 90% Track Progress.
+    */
     float getTrackProgress() {
       return ((float)this->getRelativeIterator() / (float) this->getTrackLength());
     }
 
+    /*
+    Returns true when at the end of the track
+    */
     bool atEndOfTrack() {
       return (this->getIteration() >= trackStarts[this->getTrack() + 1]);
     }
 
+    /*
+    Returns true when at the end of the tracks array.
+    */
     bool atEndOfTracks() {
       return (this->getIteration() >= util::lengthOfArray(&tracks));
     }
@@ -58,9 +75,12 @@ class TrackManager {
       return this->tempo;
     }
 
+    /*
+    Sets tempo to newTempo and automatically updates wholeNote.
+    */
     void setTempo(uint16_t newTempo) {
       this->tempo = newTempo;
-      this->wholeNote = CONST_TRACKMANAGER_MUS_WHOLE_NOTE_NO_TEMPO_APPLIED / this->tempo;
+      this->updateWholeNote();
     }
 
     void resetTrackTempo() {
@@ -97,7 +117,7 @@ class TrackManager {
     }
 
     /*
-    Updated die Werte für den neuen Track. Das selbe wie am Anfang dieser Klasse nur anpassbar und aufrufbar.
+    Updated die Werte für den neuen Track..
     Zudem printed es den Titel des jetzigen Tracks noch raus.
     */
     void setTrack(uint8_t newCurrentTrack) {
@@ -137,6 +157,8 @@ class TrackManager {
         this->setTrack(this->currentTrack + 1);  //Sonst springen wir einfach einen nach oben.
       }
     }
+
+    
 };
 
 #endif

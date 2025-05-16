@@ -15,7 +15,7 @@ const uint16_t trackStarts[] = {
   542, //Für Elise 4 OK
   1748, //E1M1 (At Doom's Gate) 5 OK
   3108, //Super Mario Bros 6 OK
-  3752, //Zelda Theme 7 OK
+  3752, //Zelda Teheme 7 OK
   3972, //Take on me 8 OK
   4168, //Greenhill Sonic the Hedgehog 9 OK
   4514, //Pacman 10 OK
@@ -28,17 +28,17 @@ const uint16_t trackStarts[] = {
   6182, //Silent Night 17 OK
   6276, //Happy Birthday 18 OK
   6326, //Jigglypuff 19 OK
-  6402, //Hedwig's Theme 20
+  6402, //Hedwig's Theme 20 OK
   6526, //Pachelbel - Canon 21 OK
-  6774, //Bloody Tears from Castlevania II 22
-  8128, //Minuet in G - C. Petzold 23
-  8508, //Song of storms - Legend of Zelda 24
-  8642, //Vampire Killer - Castlevania series 25
-  9146, //Brahms' Lullaby (Wiegenlied) 26
-  9254, //Mii Channel's theme 27
-  9826, //Alle meine Entchen
-  9882, //Anthem of the USSR //Reaction to Fion's song that is often used by Fascists on Sylt
-  11092, //End
+  6774, //Bloody Tears from Castlevania II 22 OK
+  8128, //Minuet in G - C. Petzold 23 OK
+  8508, //Song of storms - Legend of Zelda 24 OK
+  8642, //Vampire Killer - Castlevania series 25 OK
+  9146, //Brahms' Lullaby (Wiegenlied) 26 OK
+  9254, //Mii Channel's theme 27 OK
+  9826, //Alle meine Entchen OK
+  9882, //Anthem of the USSR OK
+  11092, //End //Did you expect an OK? This is the end.
 };
 
 const uint16_t trackTempo[] = {
@@ -112,6 +112,12 @@ const uint16_t trackTempo[] = {
 #endif
 
 #define NUMBER_OF_TRACKS (sizeof(trackTempo) / sizeof(*trackTempo))
+
+/*
+Alle geraden indexe sind Noten und alle ungeraden sind "Teiler" sowas wie 4 für Viertelnote.
+PROGMEM bestimmt, dass es im (aufm Arduino UNO) 64kb großen Speicher liegt.
+Ist ROM (Read Only Memory).
+*/
 
 const PROGMEM int16_t tracks[] = {
 
