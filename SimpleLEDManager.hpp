@@ -41,8 +41,8 @@ class SimpleLEDManager {
     Ich weiß wie schrecklich diese Preprocessor usage ist, aber wenn man die Preprocessor "Befehle" ignoriert kann man es verstehen. Danach versteht man es auch mit Preprocessor.
     */
     void setLED(uint8_t Pin, bool state) {
-      #ifndef DISABLE_LED
-        #ifdef DEBUG
+      #ifndef DISABLE_LED //Is fully disabled in case DISABLE_LED is defined. This means that no LEDs will work.
+        #ifdef DEBUG  //If DEBUG is defined we check wether or not this PIN is managed by this SimpleLEDManager.
         for(uint8_t i = 0; i < this->getRulesSize(); i++) {
           SimpleLEDManagerRule* rule = &this->rules[i];
           if(Pin==rule->PIN) {

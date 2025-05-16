@@ -16,7 +16,7 @@ Ich bin mir ziemlich sicher, dass mein Code okayisch geschrieben ist weil ich ha
 Steuerung:
 Der linkeste Knopf ist da zum Starten und Pausieren.
 Die beiden Knöpfe rechts davon sind da, um das vorherige/nächste Lied abzuspielen, wenn man aber beide gleichzeitig drückt, resettet man das Lied.
-Die rechtesten Knöpfe sind da um das Tempo um 5 zu senken oder zu erhöhen (-5/+5), wenn man beide gleichzeitig drückt, resettet man nur das Tempo des Liedes.
+Die rechtesten Knöpfe sind da um das Tempo um 5 zu senken oder zu erhöhen (-5/+5) (Im Normalfall lässt sich in defines.hpp ändern), wenn man beide gleichzeitig drückt, resettet man nur das Tempo des Liedes.
 */
 
 

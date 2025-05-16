@@ -1,5 +1,5 @@
-#ifndef NWT_MUS_DISCO_HPP
-#define NWT_MUS_DISCO_HPP
+#ifndef NWT_MUS_DISCO_HPP //Basically the same as #pragma once but with greater backwards compatibilty.
+#define NWT_MUS_DISCO_HPP //This all just makes sure that a file does not get included twice.
 
 #include "defines.hpp"
 #include "music.hpp"

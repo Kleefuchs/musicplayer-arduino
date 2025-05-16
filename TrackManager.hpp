@@ -127,7 +127,7 @@ class TrackManager {
       #ifdef LIGHT_DEBUG
         Serial.print("\nCurrent Track is: \"");
         for (uint16_t i = 0; i < MAX_NAME_LENGTH; i++) {
-          Serial.print((char)pgm_read_byte(&trackNames[this->currentTrack][i])); //Ist warscheinlich schrecklich ineffizient. Aber schwer besser zu machen. Stunden dran verschwendet: 1
+          Serial.print((char)pgm_read_byte(&trackNames[this->currentTrack][i])); //Ist warscheinlich schrecklich ineffizient. Aber schwer besser zu machen. Stunden dran verschwendet eine bessere Lösung zu finden: 1
         }
         Serial.print("\" which's track id is: ");
         Serial.println(this->currentTrack);
